@@ -11,7 +11,7 @@ def display():
     cate_cols = ['Embarked', 'Sex']
 
     st.subheader("1. Dữ liệu ban đầu")
-    df = pd.read_csv('../data/data.csv')
+    df = pd.read_csv('./data/data.csv')
     st.dataframe(df.head())
 
     # drop 2 row null trong cot 'Embarked'

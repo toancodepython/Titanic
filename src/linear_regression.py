@@ -58,7 +58,7 @@ def train_model(X_train, y_train, X_valid, y_valid, model_type = 'multiple', deg
 def display():
     st.title("Mô phỏng Hồi quy với MLflow Tracking")
 
-    df = pd.read_csv('../data/processed_data.csv')
+    df = pd.read_csv('./data/processed_data.csv')
     df = df.iloc[:, 1:]
     if df is not None:
 
@@ -79,7 +79,7 @@ def display():
             X_train, X_valid, X_test, y_train, y_valid, y_test = split_data(X, y, train_ratio, valid_ratio, test_ratio)
             model, train_precision, valid_precision, train_f1, valid_f1, train_recall, valid_recall, poly = train_model(X_train, y_train, X_valid, y_valid, model_type=model_type, degree=degree)
 
-            st.session_state.model = model
+            
             st.write("train_precision", train_precision)
             st.write("valid_precision", valid_precision)
             st.write("train_f1", train_f1)
