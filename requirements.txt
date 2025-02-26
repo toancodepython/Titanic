@@ -5,5 +5,4 @@ pandas
 imblearn
 tensorflow
 PIL
-umap
 dagshub
