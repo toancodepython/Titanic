@@ -30,8 +30,9 @@ def display():
     # Khởi tạo kết nối với DagsHub
     try:
         dagshub.init(repo_owner='toancodepython', repo_name='ml-flow', mlflow=True)
-        os.environ['MLFLOW_TRACKING_USERNAME'] = 'toancodepython'
-        os.environ['MLFLOW_TRACKING_PASSWORD'] = '77aaf53f20bd19c1b947a7ba4146857236d4395e'
+        os.environ["MLFLOW_TRACKING_URI"] = st.secrets["dagshub"]["MLFLOW_TRACKING_URI"]
+        os.environ["MLFLOW_TRACKING_USERNAME"] = st.secrets["dagshub"]["MLFLOW_TRACKING_USERNAME"]
+        os.environ["MLFLOW_TRACKING_PASSWORD"] = st.secrets["dagshub"]["MLFLOW_TRACKING_PASSWORD"]  
         mlflow.set_tracking_uri("https://dagshub.com/toancodepython/ml-flow.mlflow")
         client = MlflowClient()
         experiments = client.search_experiments()

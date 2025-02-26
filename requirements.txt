@@ -4,4 +4,5 @@ scikit-learn
 pandas
 imblearn
 tensorflow
-PIL
+seaborn
+dagshub
