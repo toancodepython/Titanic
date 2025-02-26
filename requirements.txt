@@ -5,4 +5,5 @@ pandas
 imblearn
 tensorflow
 seaborn
+seaborn
 dagshub
