@@ -36,14 +36,10 @@ def reduce_dimensionality(data, method, n_components):
 def log_experiment(model_name):
     try:
         dagshub.init(repo_owner='toancodepython', repo_name='ml-flow', mlflow=True)
-        username = "toancodepython"
-        password = "9002b74f39074f08fbbb72c6190cc1c980b2f40d"
-        os.environ['MLFLOW_TRACKING_USERNAME'] = 'toancodepython'
-        os.environ['MLFLOW_TRACKING_PASSWORD'] = '9002b74f39074f08fbbb72c6190cc1c980b2f40d'
         mlflow.set_tracking_uri("https://dagshub.com/toancodepython/ml-flow.mlflow")
-        session = requests.Session()
-        session.auth = (username, password)
-        client = MlflowClient(tracking_uri='https://dagshub.com/toancodepython/ml-flow.mlflow', session=session)
+        os.environ['MLFLOW_TRACKING_USERNAME'] = 'toancodepython'
+        os.environ['MLFLOW_TRACKING_PASSWORD'] = 'a6e8c1682e60df503248dcf37f42ca15ceaee13a'
+        client = MlflowClient()
         experiment_name = "Clustering"
         experiment = next((exp for exp in client.search_experiments() if exp.name == experiment_name), None)
         if experiment:
