@@ -35,7 +35,7 @@ def log_experiment(model_name):
     try:
         dagshub.init(repo_owner='toancodepython', repo_name='ml-flow', mlflow=True)
         os.environ['MLFLOW_TRACKING_USERNAME'] = 'toancodepython'
-        os.environ['MLFLOW_TRACKING_PASSWORD'] = 'a6e8c1682e60df503248dcf37f42ca15ceaee13a'
+        os.environ['MLFLOW_TRACKING_PASSWORD'] = '9002b74f39074f08fbbb72c6190cc1c980b2f40d'
         mlflow.set_tracking_uri("https://dagshub.com/toancodepython/ml-flow.mlflow")
         client = mlflow.MlflowClient()
         experiment_name = "Clustering"
