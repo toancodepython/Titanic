@@ -36,9 +36,15 @@ def reduce_dimensionality(data, method, n_components):
 def log_experiment(model_name):
     try:
         dagshub.init(repo_owner='toancodepython', repo_name='ml-flow', mlflow=True)
+        DAGSHUB_USERNAME = "NewbieHocIT"  # Thay bằng username của bạn
+        DAGSHUB_REPO_NAME = "ml-flow"
+        DAGSHUB_TOKEN = "a6e8c1682e60df503248dcf37f42ca15ceaee13a"  # Thay bằng Access Token của bạn
         mlflow.set_tracking_uri("https://dagshub.com/toancodepython/ml-flow.mlflow")
-        os.environ['MLFLOW_TRACKING_USERNAME'] = 'toancodepython'
-        os.environ['MLFLOW_TRACKING_PASSWORD'] = 'a6e8c1682e60df503248dcf37f42ca15ceaee13a'
+
+        # Thiết lập authentication bằng Access Token
+        os.environ["MLFLOW_TRACKING_USERNAME"] = DAGSHUB_USERNAME
+        os.environ["MLFLOW_TRACKING_PASSWORD"] = DAGSHUB_TOKEN
+
         client = MlflowClient()
         experiment_name = "Clustering"
         experiment = next((exp for exp in client.search_experiments() if exp.name == experiment_name), None)
