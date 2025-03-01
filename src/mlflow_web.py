@@ -29,13 +29,12 @@ def list_logged_models(id):
 def display():
     # Khởi tạo kết nối với DagsHub
     try:
-        dagshub.init(repo_owner='toancodepython', repo_name='ml-flow', mlflow=True)
-        os.environ["MLFLOW_TRACKING_URI"] = st.secrets["dagshub"]["MLFLOW_TRACKING_URI"]
-        os.environ["MLFLOW_TRACKING_USERNAME"] = st.secrets["dagshub"]["MLFLOW_TRACKING_USERNAME"]
-        os.environ["MLFLOW_TRACKING_PASSWORD"] = st.secrets["dagshub"]["MLFLOW_TRACKING_PASSWORD"]  
+        DAGSHUB_USERNAME = "toancodepython"  # Thay bằng username của bạn
+        DAGSHUB_TOKEN = "a6e8c1682e60df503248dcf37f42ca15ceaee13a"  # Thay bằng Access Token của bạn
         mlflow.set_tracking_uri("https://dagshub.com/toancodepython/ml-flow.mlflow")
-        client = MlflowClient()
-        experiments = client.search_experiments()
+        os.environ["MLFLOW_TRACKING_USERNAME"] = DAGSHUB_USERNAME
+        os.environ["MLFLOW_TRACKING_PASSWORD"] = DAGSHUB_TOKEN
+        experiments = mlflow.search_experiments()
         print('ok')
     except Exception as e:
         st.warning("Không thể kết nối với MLflow hoặc DagsHub. Vui lòng kiểm tra cài đặt.")
