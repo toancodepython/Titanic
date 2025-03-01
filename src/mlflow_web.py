@@ -43,7 +43,7 @@ def display():
     st.title("🚀 MLflow Model Logging & Registry")
 
     # Chọn thí nghiệm
-    experiments = client.search_experiments()
+    experiments = mlflow.search_experiments()
     experiment_names = [exp.name for exp in experiments]
     selected_experiment = st.selectbox("📊 Chọn thí nghiệm", experiment_names)
     experiment_id = next(exp.experiment_id for exp in experiments if exp.name == selected_experiment)
@@ -61,7 +61,7 @@ def display():
         for run_name in selected_run_names:
             run_info = models_df[models_df["Run Name"] == run_name].iloc[0]
             run_id = run_info["Run ID"]
-            run = client.get_run(run_id)
+            run = mlflow.get_run(run_id)
             comparison_data.append({
                 "Run ID": run_id,
                 "Run Name": run.data.tags.get("mlflow.runName", "N/A"),
