@@ -35,7 +35,6 @@ def reduce_dimensionality(data, method, n_components):
 
 def log_experiment(model_name):
     try:
-        dagshub.init(repo_owner='toancodepython', repo_name='ml-flow', mlflow=True)
         DAGSHUB_USERNAME = "toancodepython"  # Thay bằng username của bạn
         DAGSHUB_REPO_NAME = "ml-flow"
         DAGSHUB_TOKEN = "a6e8c1682e60df503248dcf37f42ca15ceaee13a"  # Thay bằng Access Token của bạn
