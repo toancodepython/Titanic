@@ -45,9 +45,8 @@ def log_experiment(model_name):
         os.environ["MLFLOW_TRACKING_USERNAME"] = DAGSHUB_USERNAME
         os.environ["MLFLOW_TRACKING_PASSWORD"] = DAGSHUB_TOKEN
 
-        client = MlflowClient()
         experiment_name = "Clustering"
-        experiment = next((exp for exp in client.search_experiments() if exp.name == experiment_name), None)
+        experiment = next((exp for exp in mlflow.search_experiments() if exp.name == experiment_name), None)
         if experiment:
             experiment_id = experiment.experiment_id
             print(f"Experiment ID: {experiment_id}")
