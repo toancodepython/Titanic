@@ -6,12 +6,42 @@ from sklearn.svm import SVC
 from sklearn.metrics import accuracy_score, classification_report
 from sklearn.model_selection import train_test_split
 import pickle
+import mlflow
+import os
 def load_data():
     train_data = pd.read_csv("data/mnist/train.csv")
     X = train_data.iloc[:, 1:].values / 255.0
     y = train_data.iloc[:, 0].values
     return train_data, X, y
+def log_experiment(model_name, acc, report):
+    try:
+        DAGSHUB_USERNAME = "toancodepython"  # Thay bằng username của bạn
+        DAGSHUB_REPO_NAME = "ml-flow"
+        DAGSHUB_TOKEN = "a6e8c1682e60df503248dcf37f42ca15ceaee13a"  # Thay bằng Access Token của bạn
+        mlflow.set_tracking_uri("https://dagshub.com/toancodepython/ml-flow.mlflow")
+        # Thiết lập authentication bằng Access Token
+        os.environ["MLFLOW_TRACKING_USERNAME"] = DAGSHUB_USERNAME
+        os.environ["MLFLOW_TRACKING_PASSWORD"] = DAGSHUB_TOKEN
 
+        experiment_name = "MNIST_Classification"
+        experiment = next((exp for exp in mlflow.search_experiments() if exp.name == experiment_name), None)
+        if experiment:
+            experiment_id = experiment.experiment_id
+            print(f"Experiment ID: {experiment_id}")
+            mlflow.set_experiment(experiment_name)
+            with mlflow.start_run(run_name = model_name) as run:
+                mlflow.log_metric("Accuracy", acc)
+                for label, metrics in report.items():
+                    if isinstance(metrics, dict):  # Bỏ qua 'accuracy' vì nó là số đơn
+                        for metric_name, value in metrics.items():
+                            mlflow.log_metric(f"{metric_name}_class_{label}", value)
+                st.success(f"✅ Mô hình được log vào thí nghiệm: {experiment_name}")
+        else:
+            # Nếu thí nghiệm chưa tồn tại, tạo mới
+            experiment_id = mlflow.create_experiment(experiment_name)
+        print("Active Run:", mlflow.active_run())
+    except Exception as e:
+        st.warning("Không thể kết nối với MLflow hoặc DagsHub. Vui lòng kiểm tra cài đặt.")
 def show_sample_images():
     train_data = pd.read_csv("data/mnist/train.csv")
     unique_labels = train_data.iloc[:, 0].unique()
@@ -53,7 +83,7 @@ def display():
     st.write("📊 Label Distribution:")
     plot_label_distribution(y)
 
-    if st.button("Proceed to Training 🚀"):
+    if st.button("Proceed to Training 🚀", key = "btn_14"):
         st.session_state['train_ready'] = True
 
     if 'train_ready' in st.session_state:
@@ -88,13 +118,19 @@ def display():
             y_pred = model.predict(X_test)
             accuracy = accuracy_score(y_test, y_pred)
             class_report = classification_report(y_test, y_pred, output_dict=True)
-            
+            st.session_state['accuracy'] = accuracy
+            st.session_state['class_report'] = class_report
             st.success(f"✅ Model Accuracy: {accuracy:.4f}")
             st.subheader("📊 Classification Report")
             st.dataframe(pd.DataFrame(class_report).transpose())
 
     if 'model' in st.session_state:
-        
+        model_name = st.text_input("🏷️ Nhập tên mô hình", key = "clustering_decision")
+        if st.button("Log Experiment Classification", key = "btn_decision"):
+                log_experiment(model_name, acc=st.session_state['accuracy'], report = st.session_state['class_report']) 
+        # Hiển thị trạng thái log thành công
+        if st.session_state.log_success:
+            st.success("🚀 Experiment đã được log thành công!")
         st.header("📌 Step 4: Predict Custom Digit")
         uploaded_file = st.file_uploader("📤 Upload  grayscale image of a digit", type=["png", "jpg", "jpeg"])
         

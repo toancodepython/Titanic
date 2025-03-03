@@ -39,7 +39,6 @@ def log_experiment(model_name):
         DAGSHUB_REPO_NAME = "ml-flow"
         DAGSHUB_TOKEN = "a6e8c1682e60df503248dcf37f42ca15ceaee13a"  # Thay bằng Access Token của bạn
         mlflow.set_tracking_uri("https://dagshub.com/toancodepython/ml-flow.mlflow")
-
         # Thiết lập authentication bằng Access Token
         os.environ["MLFLOW_TRACKING_USERNAME"] = DAGSHUB_USERNAME
         os.environ["MLFLOW_TRACKING_PASSWORD"] = DAGSHUB_TOKEN
@@ -100,10 +99,11 @@ def display():
 
         # Dataset selection
         st.write("## Dataset Options")
-        st.session_state.sample_size = int(st.text_input("Number of samples (max = 70000)", st.session_state.sample_size))
-        st.session_state.train_size = float(st.text_input("Train set ratio", st.session_state.train_size))
+        st.write(f"Sử dụng bộ dữ liệu từ MLOpen")
+        st.session_state.sample_size = int(st.text_input("Number of samples (max = 70000)", st.session_state.sample_size, key = "clustering_1"))
+        st.session_state.train_size = float(st.text_input("Train set ratio", st.session_state.train_size, key = "clustering_2"))
 
-        if st.button("Xác nhận chia tập dữ liệu"):
+        if st.button("Xác nhận chia tập dữ liệu", key = "btn_0"):
             st.session_state.split_data_clicked = True
 
         if st.session_state.split_data_clicked:
@@ -119,9 +119,9 @@ def display():
         # Choose dimensionality reduction method
         st.write("## Dimensionality Reduction")
         st.session_state.dim_reduction = st.selectbox("Select method", ["PCA", "t-SNE"])
-        st.session_state.n_components = int(st.text_input("Number of dimensions", st.session_state.n_components))
+        st.session_state.n_components = int(st.text_input("Number of dimensions", st.session_state.n_components, key = "clustering_3"))
 
-        if st.button("Xác nhận giảm chiều dữ liệu"):
+        if st.button("Xác nhận giảm chiều dữ liệu", key = "btn_1"):
             if "x_train" in st.session_state:
                 st.session_state.x_train = reduce_dimensionality(st.session_state.x_train, st.session_state.dim_reduction, st.session_state.n_components)
                 st.session_state.x_val = reduce_dimensionality(st.session_state.x_val, st.session_state.dim_reduction, st.session_state.n_components)
@@ -136,12 +136,12 @@ def display():
         st.session_state.algorithm = st.selectbox("Select Clustering Algorithm", ["K-Means", "DBSCAN"])
         
         if st.session_state.algorithm == "K-Means":
-            st.session_state.num_clusters = int(st.text_input("Number of clusters", st.session_state.num_clusters))
+            st.session_state.num_clusters = int(st.text_input("Number of clusters", st.session_state.num_clusters, key = "clustering_4"))
         elif st.session_state.algorithm == "DBSCAN":
-            st.session_state.eps = float(st.text_input("Epsilon (eps)", st.session_state.eps))
-            st.session_state.min_samples = int(st.text_input("Min Samples", st.session_state.min_samples))
+            st.session_state.eps = float(st.text_input("Epsilon (eps)", st.session_state.eps, key = "clustering_6"))
+            st.session_state.min_samples = int(st.text_input("Min Samples", st.session_state.min_samples, key = "clustering_5"))
 
-        if st.button("Train Model"):
+        if st.button("Train Model", key = "btn_2"):
             if "x_train" not in st.session_state or "x_val" not in st.session_state:
                 st.warning("Vui lòng chia tập dữ liệu trước!")
                 return
@@ -171,8 +171,8 @@ def display():
             st.write(f"- **Silhouette Score:** {sil}")
             st.success("Training Completed!")
 
-        model_name = st.text_input("🏷️ Nhập tên mô hình")
-        if st.button("Log Experiment Clustering"):
+        model_name = st.text_input("🏷️ Nhập tên mô hình", key = "clustering_7")
+        if st.button("Log Experiment Clustering", key = "btn_4"):
             log_experiment(model_name) 
 
         # Hiển thị trạng thái log thành công

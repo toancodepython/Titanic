@@ -74,7 +74,7 @@ def display():
         model_type = st.selectbox("Chọn loại mô hình", ["multiple", "polynomial"])
         degree = st.slider("Bậc của hồi quy đa thức", 2, 5, 2) if model_type == "polynomial" else None
         
-        if st.button("Huấn luyện mô hình"):
+        if st.button("Huấn luyện mô hình", key = "btn_7"):
         
             X_train, X_valid, X_test, y_train, y_valid, y_test = split_data(X, y, train_ratio, valid_ratio, test_ratio)
             model, train_precision, valid_precision, train_f1, valid_f1, train_recall, valid_recall, poly = train_model(X_train, y_train, X_valid, y_valid, model_type=model_type, degree=degree)
@@ -88,7 +88,7 @@ def display():
             st.write("valid_recall", valid_recall)
 
         if st.session_state.model is not None:
-            if st.button("Dự đoán"):
+            if st.button("Dự đoán" , key = "btn_8"):
                 st.sidebar.header("Nhập thông tin dự đoán")
                 pclass = st.sidebar.selectbox("Pclass", [1, 2, 3])
                 sex = st.sidebar.selectbox("Sex", ["male", "female"])
