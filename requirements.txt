@@ -6,3 +6,4 @@ imblearn
 tensorflow
 seaborn
 dagshub
+cv2
