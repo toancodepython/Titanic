@@ -9,8 +9,8 @@ from src import mlflow_web
 from src import neural
 
 # Sidebar navigation
-st.sidebar.title("App Selection")
-option = st.sidebar.selectbox("Chọn lựa chọn phù hợp:", ["Titanic Data", "Linear Regression", "SVM Mnist", "Decision Tree Mnist",  "Clustering", "Neural Network", "ML-Flow"])
+st.sidebar.title("Lựa chọn")
+option = st.sidebar.selectbox(["Titanic Data", "Linear Regression", "SVM Mnist", "Decision Tree Mnist",  "Clustering", "Neural Network", "ML-Flow"])
 
 if(option == 'Titanic Data'):
     pre_processing.display()
