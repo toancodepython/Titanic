@@ -6,4 +6,4 @@ imblearn
 tensorflow
 seaborn
 dagshub
-cv2
+opencv-contrib-python-headless

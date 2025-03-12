@@ -4,8 +4,6 @@ import streamlit as st
 import tensorflow as tf
 import numpy as np
 import cv2
-import matplotlib.pyplot as plt
-import seaborn as sns
 from streamlit_drawable_canvas import st_canvas
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, Flatten
