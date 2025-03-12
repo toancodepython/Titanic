@@ -138,7 +138,7 @@ def display():
     )
     # Dự đoán chữ số
     if 'model' in st.session_state:
-        
+    
         if canvas.image_data is not None and st.button("Dự đoán"):
             image = cv2.cvtColor(canvas.image_data.astype(np.uint8), cv2.COLOR_RGBA2GRAY)
             image = cv2.resize(image, (28, 28))
