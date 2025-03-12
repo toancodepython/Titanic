@@ -6,10 +6,11 @@ from src import svm_mnist
 from src import decision_tree_mnist
 from src import clustering
 from src import mlflow_web
-from src import reduction
+from src import neural
+
 # Sidebar navigation
 st.sidebar.title("App Selection")
-option = st.sidebar.selectbox("Chọn lựa chọn phù hợp:", ["Titanic Data", "Linear Regression", "SVM Mnist", "Decision Tree Mnist",  "Clustering", "Dimmension Reduce", "ML-Flow"])
+option = st.sidebar.selectbox("Chọn lựa chọn phù hợp:", ["Titanic Data", "Linear Regression", "SVM Mnist", "Decision Tree Mnist",  "Clustering", "Neural Network", "ML-Flow"])
 
 if(option == 'Titanic Data'):
     pre_processing.display()
@@ -23,5 +24,6 @@ elif(option == 'Clustering'):
     clustering.display()
 elif(option == 'ML-Flow'):
     mlflow_web.display()
-elif(option == 'Dimmension Reduce'):
-    reduction.display()
+
+elif(option == 'Neural Network'):
+    neural.display()

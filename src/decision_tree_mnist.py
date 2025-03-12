@@ -29,6 +29,7 @@ def show_sample_images():
         ax.axis("off")
         label_count += 1
     st.pyplot(fig)
+    
 def log_experiment(model_name, acc, report):
     try:
         DAGSHUB_USERNAME = "toancodepython"  # Thay bằng username của bạn
@@ -38,7 +39,6 @@ def log_experiment(model_name, acc, report):
         # Thiết lập authentication bằng Access Token
         os.environ["MLFLOW_TRACKING_USERNAME"] = DAGSHUB_USERNAME
         os.environ["MLFLOW_TRACKING_PASSWORD"] = DAGSHUB_TOKEN
-
         experiment_name = "MNIST_Classification"
         experiment = next((exp for exp in mlflow.search_experiments() if exp.name == experiment_name), None)
         if experiment:
@@ -126,8 +126,6 @@ def display():
             st.success(f"✅ Model Accuracy: {accuracy:.4f}")
             st.subheader("📊 Classification Report")
             st.dataframe(pd.DataFrame(class_report).transpose())
-
-            
 
     if 'model' in st.session_state:
         model_name = st.text_input("🏷️ Nhập tên mô hình", key = "clustering_decision")
