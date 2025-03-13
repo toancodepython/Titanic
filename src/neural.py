@@ -117,7 +117,7 @@ def display():
     if st.button("Huấn luyện mô hình"):
         model = create_model(loss_function=loss_function, num_hidden_layers=num_hidden_layers, num_neurons=num_neurons, optimizer=optimizer)
         with st.spinner("Đang huấn luyện..."):
-            history = model.fit(x_train, y_train, epochs=epochs, batch_size=10, verbose=0, validation_data=(x_val, y_val))
+            history = model.fit(x_train, y_train, epochs=epochs, batch_size=5, verbose=0)
             st.session_state.model = model
             st.session_state.accuracy = history.history['val_accuracy'][-1]  # Lưu độ chính xác
         st.success("Huấn luyện thành công!")
